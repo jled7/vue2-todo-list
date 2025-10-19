@@ -1,13 +1,16 @@
+<script setup>
+import TodoItem from "./TodoItem.vue";
+</script>
+
 <template>
   <div class="todo-list">
     <ul>
-      <li
+      <TodoItem
         v-for="task in tasks"
         :key="task.id"
+        :task="task"
         @click="$emit('toggleTask', task.id)"
-      >
-        {{ task.title }} - {{ task.completed ? "Completed" : "Pending" }}
-      </li>
+      />
     </ul>
   </div>
 </template>
