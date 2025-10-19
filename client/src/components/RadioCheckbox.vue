@@ -1,6 +1,6 @@
 <template>
   <div id="radio-checkbox">
-    <label class="container"
+    <label class="container" @click.self.stop
       ><slot></slot>
       <input type="checkbox" v-bind:checked="checked" />
       <span class="radio"></span>
@@ -25,7 +25,6 @@ export default {
   display: block;
   position: relative;
   padding-left: 35px;
-  margin-bottom: 12px;
   cursor: pointer;
   font-size: 22px;
   -webkit-user-select: none;
@@ -44,7 +43,7 @@ export default {
 
 .radio {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
   height: 25px;
   width: 25px;

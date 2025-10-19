@@ -3,8 +3,8 @@ import RadioCheckbox from "./RadioCheckbox.vue";
 </script>
 
 <template>
-  <div class="todo-item" @click.self.stop="$emit('toggleTask')">
-    <div class="todo-title">
+  <div class="todo-item" @click="$emit('toggleTask')">
+    <div class="todo-title" :class="{ completed: task.completed }">
       <RadioCheckbox :checked="task.completed">
         {{ task.title }}
       </RadioCheckbox>

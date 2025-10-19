@@ -5,17 +5,32 @@ import AddTaskInput from "./components/AddTaskInput.vue";
 
 <template>
   <div id="app">
-    <div class="container">
-      <h1>To-Do List</h1>
-      <p>Welcome to your To-Do App!</p>
-      <div v-if="loading">Loading tasks...</div>
-      <div v-else-if="tasks.length === 0">
-        No tasks available. Add a new task!
+    <div class="container card">
+      <AddTaskInput @addTask="addTask" />
+      <div class="todo-controls">
+        <div class="tabs">
+          <button :class="{ active: filter === 'all' }" @click="filter = 'all'">
+            All
+          </button>
+          <button
+            :class="{ active: filter === 'pending' }"
+            @click="filter = 'pending'"
+          >
+            Pending
+          </button>
+          <button
+            :class="{ active: filter === 'completed' }"
+            @click="filter = 'completed'"
+          >
+            Completed
+          </button>
+        </div>
       </div>
-      <div v-else>
-        <AddTaskInput @addTask="addTask" />
-        <TodoList :tasks="tasks" @toggleTask="toggleTask" />
+      <div v-if="loading" class="loading">Loading tasks...</div>
+      <div v-else-if="filteredTasks.length === 0" class="empty">
+        No tasks available.
       </div>
+      <TodoList v-else :tasks="filteredTasks" @toggleTask="toggleTask" />
     </div>
   </div>
 </template>
@@ -27,17 +42,24 @@ export default {
     return {
       tasks: [],
       loading: true,
+      filter: "all",
     };
   },
   mounted() {
     this.fetchTasks();
   },
   computed: {
-    completedCount() {
-      return this.tasks.filter((task) => task.completed).length;
-    },
-    pendingCount() {
-      return this.tasks.filter((task) => !task.completed).length;
+    filteredTasks() {
+      if (this.filter === "all") {
+        return this.tasks;
+      }
+      if (this.filter === "pending") {
+        return this.tasks.filter((t) => !t.completed);
+      }
+      if (this.filter === "completed") {
+        return this.tasks.filter((t) => t.completed);
+      }
+      return this.tasks;
     },
   },
   methods: {
@@ -47,14 +69,32 @@ export default {
         this.tasks = [
           {
             id: 1,
-            title: "Sample Task 1",
+            title: "Renew gym membership",
             completed: false,
             createdAt: new Date(),
           },
           {
             id: 2,
-            title: "Sample Task 2",
+            title: "Create a video for YouTube",
             completed: true,
+            createdAt: new Date(),
+          },
+          {
+            id: 3,
+            title: "Write a blog about new trends",
+            completed: false,
+            createdAt: new Date(),
+          },
+          {
+            id: 4,
+            title: "Send project file to the client",
+            completed: false,
+            createdAt: new Date(),
+          },
+          {
+            id: 5,
+            title: "Discuss new project with team",
+            completed: false,
             createdAt: new Date(),
           },
         ];
@@ -63,7 +103,7 @@ export default {
     },
     addTask(task) {
       task.id = this.tasks.length + 1;
-      this.tasks.push(task);
+      this.tasks.unshift(task);
     },
     toggleTask(taskId) {
       const task = this.tasks.find((t) => t.id === taskId);
