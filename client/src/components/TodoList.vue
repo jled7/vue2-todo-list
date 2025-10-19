@@ -9,7 +9,7 @@ import TodoItem from "./TodoItem.vue";
         v-for="task in tasks"
         :key="task.id"
         :task="task"
-        @click="$emit('toggleTask', task.id)"
+        @toggleTask="$emit('toggleTask', task.id)"
       />
     </ul>
   </div>

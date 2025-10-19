@@ -22,9 +22,9 @@ export default {
     addTask() {
       if (this.newTask.trim()) {
         this.$emit("addTask", {
-          id: Date.now(),
           title: this.newTask,
           completed: false,
+          createdAt: Date.now(),
         });
         this.newTask = "";
       }

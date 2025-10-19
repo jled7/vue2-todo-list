@@ -1,6 +1,6 @@
 <script setup>
-import AddTaskInput from "./components/AddTaskInput.vue";
 import TodoList from "./components/TodoList.vue";
+import AddTaskInput from "./components/AddTaskInput.vue";
 </script>
 
 <template>
@@ -32,18 +32,37 @@ export default {
   mounted() {
     this.fetchTasks();
   },
+  computed: {
+    completedCount() {
+      return this.tasks.filter((task) => task.completed).length;
+    },
+    pendingCount() {
+      return this.tasks.filter((task) => !task.completed).length;
+    },
+  },
   methods: {
     fetchTasks() {
       // Simulate fetching tasks from an API
       setTimeout(() => {
         this.tasks = [
-          { id: 1, title: "Sample Task 1", completed: false },
-          { id: 2, title: "Sample Task 2", completed: true },
+          {
+            id: 1,
+            title: "Sample Task 1",
+            completed: false,
+            createdAt: new Date(),
+          },
+          {
+            id: 2,
+            title: "Sample Task 2",
+            completed: true,
+            createdAt: new Date(),
+          },
         ];
         this.loading = false;
       }, 1000);
     },
     addTask(task) {
+      task.id = this.tasks.length + 1;
       this.tasks.push(task);
     },
     toggleTask(taskId) {
