@@ -1,55 +1,57 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+import AddTaskInput from "./components/AddTaskInput.vue";
+import TodoList from "./components/TodoList.vue";
 </script>
 
 <template>
   <div id="app">
-    <header>
-      <img
-        alt="Vue logo"
-        class="logo"
-        src="./assets/logo.svg"
-        width="125"
-        height="125"
-      />
-
-      <div class="wrapper">
-        <HelloWorld msg="You did it! Yayyy!" />
+    <div class="container">
+      <h1>To-Do List</h1>
+      <p>Welcome to your To-Do App!</p>
+      <div v-if="loading">Loading tasks...</div>
+      <div v-else-if="tasks.length === 0">
+        No tasks available. Add a new task!
       </div>
-    </header>
-
-    <main>
-      <TheWelcome />
-    </main>
+      <div v-else>
+        <AddTaskInput @addTask="addTask" />
+        <TodoList :tasks="tasks" @toggleTask="toggleTask" />
+      </div>
+    </div>
   </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<script>
+export default {
+  name: "App",
+  data() {
+    return {
+      tasks: [],
+      loading: true,
+    };
+  },
+  mounted() {
+    this.fetchTasks();
+  },
+  methods: {
+    fetchTasks() {
+      // Simulate fetching tasks from an API
+      setTimeout(() => {
+        this.tasks = [
+          { id: 1, title: "Sample Task 1", completed: false },
+          { id: 2, title: "Sample Task 2", completed: true },
+        ];
+        this.loading = false;
+      }, 1000);
+    },
+    addTask(task) {
+      this.tasks.push(task);
+    },
+    toggleTask(taskId) {
+      const task = this.tasks.find((t) => t.id === taskId);
+      if (task) {
+        task.completed = !task.completed;
+      }
+    },
+  },
+};
+</script>
