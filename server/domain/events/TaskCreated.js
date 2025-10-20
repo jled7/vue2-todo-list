@@ -4,7 +4,11 @@ export default class TaskCreated {
   constructor({ task }) {
     this.task = task;
   }
-  get name() {
+  static get name() {
     return EVENT_NAME;
+  }
+
+  get name() {
+    return TaskCreated.name;
   }
 }
