@@ -12,6 +12,10 @@ export class MongoDBTaskRepository extends TaskRepository {
     mongoose.connect(MONGODB_URI);
   }
 
+  idGenerator() {
+    return new mongoose.Types.ObjectId();
+  }
+
   async save(task) {
     if (task.id) {
       await TaskModel.updateOne(
