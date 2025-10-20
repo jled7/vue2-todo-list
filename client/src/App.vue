@@ -10,19 +10,19 @@ import AddTaskInput from "./components/AddTaskInput.vue";
       <div class="todo-controls">
         <div class="tabs">
           <button :class="{ active: filter === 'all' }" @click="filter = 'all'">
-            All
+            All ({{ allTaskCount }})
           </button>
           <button
             :class="{ active: filter === 'pending' }"
             @click="filter = 'pending'"
           >
-            Pending
+            Pending ({{ pendingTaskCount }})
           </button>
           <button
             :class="{ active: filter === 'completed' }"
             @click="filter = 'completed'"
           >
-            Completed
+            Completed ({{ completedTaskCount }})
           </button>
         </div>
       </div>
@@ -60,6 +60,15 @@ export default {
         return this.tasks.filter((t) => t.completed);
       }
       return this.tasks;
+    },
+    allTaskCount() {
+      return this.tasks.length;
+    },
+    completedTaskCount() {
+      return this.tasks.filter((t) => t.completed).length;
+    },
+    pendingTaskCount() {
+      return this.tasks.filter((t) => !t.completed).length;
     },
   },
   methods: {
