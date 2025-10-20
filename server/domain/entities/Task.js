@@ -22,6 +22,10 @@ export default class Task {
     }
   }
 
+  toggleCompletion() {
+    this.completed = !this.completed;
+  }
+
   static create({ title, idGenerator }) {
     const task = new Task({
       id: idGenerator(),
