@@ -1,9 +1,17 @@
-import Task from "../../../domain/entities/Task";
-import TaskRepository from "../../../domain/repositories/TaskRepository";
+import mongoose from "mongoose";
+import Task from "../../../domain/entities/Task.js";
+import TaskRepository from "../../../domain/repositories/TaskRepository.js";
 
-import TaskModel from "./TaskModel";
+import TaskModel from "./TaskModel.js";
+
+import { MONGODB_URI } from "../../../config/index.js";
 
 export class MongoDBTaskRepository extends TaskRepository {
+  constructor() {
+    super();
+    mongoose.connect(MONGODB_URI);
+  }
+
   async save(task) {
     if (task.id) {
       await TaskModel.updateOne(
