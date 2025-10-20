@@ -1,12 +1,21 @@
 import express from "express";
+import addTaskUseCase from "../../application/usecases/addTask.js";
+import listTasksUseCase from "../../application/usecases/listTasks.js";
+import toggleTaskCompletionUseCase from "../../application/usecases/toggleTaskCompletion.js";
 
-export default function buildTaskRoutes({
-  addTask,
-  listTasks,
-  toggleTaskCompletion,
-  sse,
-}) {
+export default function buildTaskRoutes({ repository, eventBus, sse }) {
   const router = express.Router();
+
+  const addTask = addTaskUseCase({
+    repository,
+    eventBus,
+    idGenerator: repository.idGenerator,
+  });
+  const listTasks = listTasksUseCase({ repository });
+  const toggleTaskCompletion = toggleTaskCompletionUseCase({
+    repository,
+    eventBus,
+  });
 
   router.get("/", async (req, res) => {
     const data = await listTasks();
@@ -15,7 +24,7 @@ export default function buildTaskRoutes({
 
   router.post("/", async (req, res) => {
     try {
-      const dto = await addTask({ text: req.body.text });
+      const dto = await addTask({ title: req.body.title });
       res.status(201).json(dto);
     } catch (e) {
       res.status(400).json({ error: e.message });

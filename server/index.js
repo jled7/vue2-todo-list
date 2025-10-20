@@ -2,9 +2,6 @@ import express from "express";
 import cors from "cors";
 import { APP_PORT } from "./config/index.js";
 
-import addTaskUseCase from "./application/usecases/addTask.js";
-import listTasksUseCase from "./application/usecases/listTasks.js";
-import toggleTaskCompletionUseCase from "./application/usecases/toggleTaskCompletion.js";
 import EventBus from "./application/services/EventBus.js";
 
 import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository.js";
@@ -23,9 +20,8 @@ const sse = new ServerSideEvents({ eventBus });
 app.use(
   "/api/tasks",
   buildTaskRoutes({
-    addTask: addTaskUseCase({ repository, eventBus }),
-    listTasks: listTasksUseCase({ repository }),
-    toggleTaskCompletion: toggleTaskCompletionUseCase({ repository, eventBus }),
+    repository,
+    eventBus,
     sse,
   })
 );
