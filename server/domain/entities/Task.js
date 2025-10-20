@@ -1,5 +1,3 @@
-import TaskCreated from "../events/TaskCreated";
-
 export default class Task {
   constructor({ id, title, completed = false, createdAt = new Date() }) {
     this.validateTitle(title);
@@ -31,7 +29,7 @@ export default class Task {
       completed: false,
       createdAt: new Date(),
     });
-    const events = [new TaskCreated({ task })];
-    return { task, events };
+
+    return task;
   }
 }
