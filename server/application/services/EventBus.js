@@ -7,7 +7,7 @@ export default class EventBus {
     list.push(handler);
     this.#handlers.set(eventName, list);
   }
-  emit(event) {
+  publish(event) {
     const list = this.#handlers.get(event.name) || [];
     for (const h of list) h(event);
   }
