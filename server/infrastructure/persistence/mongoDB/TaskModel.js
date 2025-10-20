@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const schema = new mongoose.Schema(
   {
-    _id: { type: String },
+    _id: { type: mongoose.Types.ObjectId, required: true },
     title: { type: String, required: true },
     completed: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
