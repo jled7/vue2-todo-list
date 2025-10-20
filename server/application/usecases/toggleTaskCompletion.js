@@ -1,6 +1,6 @@
 import TaskToggleCompleted from "../../domain/events/TaskToggleCompleted.js";
 
-export default function toggleTaskCompletion({ repository } = {}) {
+export default function toggleTaskCompletion({ repository, eventBus } = {}) {
   return async ({ id }) => {
     const task = await repository.get(id);
 
