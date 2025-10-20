@@ -3,6 +3,8 @@ import addTaskUseCase from "../../application/usecases/addTask.js";
 import listTasksUseCase from "../../application/usecases/listTasks.js";
 import toggleTaskCompletionUseCase from "../../application/usecases/toggleTaskCompletion.js";
 
+import setupTaskEvents from "../events/task.js";
+
 export default function buildTaskRoutes({ repository, eventBus, sse }) {
   const router = express.Router();
 
@@ -16,6 +18,8 @@ export default function buildTaskRoutes({ repository, eventBus, sse }) {
     repository,
     eventBus,
   });
+
+  setupTaskEvents({ eventBus, sse });
 
   router.get("/", async (req, res) => {
     const data = await listTasks();
@@ -40,7 +44,7 @@ export default function buildTaskRoutes({ repository, eventBus, sse }) {
     }
   });
 
-  router.get("/api/stream", (req, res) => sse.handle(req, res));
+  router.get("/stream", (req, res) => sse.handle(req, res));
 
   return router;
 }

@@ -17,10 +17,12 @@ export class MongoDBTaskRepository extends TaskRepository {
   }
 
   async save(task) {
+    const taskData = { ...task };
+
     if (task.id) {
       await TaskModel.updateOne(
-        { _id: task.id },
-        { $set: task },
+        { _id: taskData.id },
+        { $set: taskData },
         { upsert: true }
       );
     } else {
