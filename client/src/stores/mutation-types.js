@@ -7,3 +7,4 @@ export const SET_TASKS = "SET_TASKS";
 export const TOGGLE_TASK = "TOGGLE_TASK";
 
 export const SET_ERROR = "SET_ERROR";
+export const CLEAR_ERROR = "CLEAR_ERROR";
