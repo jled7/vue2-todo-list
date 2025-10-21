@@ -1,8 +1,3 @@
-<script setup>
-import TodoList from "./components/TodoList.vue";
-import AddTaskInput from "./components/AddTaskInput.vue";
-</script>
-
 <template>
   <div id="app">
     <div class="container card">
@@ -36,8 +31,15 @@ import AddTaskInput from "./components/AddTaskInput.vue";
 </template>
 
 <script>
+import TodoList from "./components/TodoList.vue";
+import AddTaskInput from "./components/AddTaskInput.vue";
+
 export default {
   name: "App",
+  components: {
+    TodoList,
+    AddTaskInput,
+  },
   data() {
     return {
       tasks: [],

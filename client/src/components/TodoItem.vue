@@ -1,7 +1,3 @@
-<script setup>
-import RadioCheckbox from "./RadioCheckbox.vue";
-</script>
-
 <template>
   <div class="todo-item" @click="$emit('toggleTask')">
     <div class="todo-title" :class="{ completed: task.completed }">
@@ -16,8 +12,13 @@ import RadioCheckbox from "./RadioCheckbox.vue";
 </template>
 
 <script>
+import RadioCheckbox from "./RadioCheckbox.vue";
+
 export default {
   name: "TodoItem",
+  components: {
+    RadioCheckbox,
+  },
   props: {
     task: {
       type: Object,

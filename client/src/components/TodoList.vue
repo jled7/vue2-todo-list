@@ -1,7 +1,3 @@
-<script setup>
-import TodoItem from "./TodoItem.vue";
-</script>
-
 <template>
   <div class="todo-list">
     <ul>
@@ -16,8 +12,13 @@ import TodoItem from "./TodoItem.vue";
 </template>
 
 <script>
+import TodoItem from "./TodoItem.vue";
+
 export default {
   name: "TodoList",
+  components: {
+    TodoItem,
+  },
   props: {
     tasks: {
       type: Array,
