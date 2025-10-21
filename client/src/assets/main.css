@@ -107,6 +107,7 @@ body {
   background: #f1f5f9;
 }
 .todo-title {
+  max-width: 555px;
   font-size: 1.08rem;
   color: #334155;
   font-weight: 500;
