@@ -1,8 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from "vue";
 
-import './assets/main.css'
+import App from "./App.vue";
+import store from "./stores/todo.js";
+
+import "./assets/main.css";
 
 new Vue({
-  render: (h) => h(App)
-}).$mount('#app')
+  store,
+  render: (h) => h(App),
+}).$mount("#app");
