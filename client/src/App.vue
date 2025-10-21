@@ -4,18 +4,21 @@
       <AddTaskInput @addTask="addTask" />
       <div class="todo-controls">
         <div class="tabs">
-          <button :class="{ active: filter === 'all' }" @click="filter = 'all'">
+          <button
+            :class="{ active: filter === 'all' }"
+            @click="setFilter('all')"
+          >
             All ({{ allTaskCount }})
           </button>
           <button
             :class="{ active: filter === 'pending' }"
-            @click="filter = 'pending'"
+            @click="setFilter('pending')"
           >
             Pending ({{ pendingTaskCount }})
           </button>
           <button
             :class="{ active: filter === 'completed' }"
-            @click="filter = 'completed'"
+            @click="setFilter('completed')"
           >
             Completed ({{ completedTaskCount }})
           </button>
@@ -33,6 +36,7 @@
 <script>
 import TodoList from "./components/TodoList.vue";
 import AddTaskInput from "./components/AddTaskInput.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "App",
@@ -40,88 +44,27 @@ export default {
     TodoList,
     AddTaskInput,
   },
-  data() {
-    return {
-      tasks: [],
-      loading: true,
-      filter: "all",
-    };
-  },
   mounted() {
     this.fetchTasks();
   },
   computed: {
-    filteredTasks() {
-      if (this.filter === "all") {
-        return this.tasks;
-      }
-      if (this.filter === "pending") {
-        return this.tasks.filter((t) => !t.completed);
-      }
-      if (this.filter === "completed") {
-        return this.tasks.filter((t) => t.completed);
-      }
-      return this.tasks;
-    },
-    allTaskCount() {
-      return this.tasks.length;
-    },
-    completedTaskCount() {
-      return this.tasks.filter((t) => t.completed).length;
-    },
-    pendingTaskCount() {
-      return this.tasks.filter((t) => !t.completed).length;
-    },
+    ...mapGetters([
+      "filter",
+      "loading",
+      "filteredTasks",
+      "allTaskCount",
+      "completedTaskCount",
+      "pendingTaskCount",
+    ]),
   },
   methods: {
-    fetchTasks() {
-      // Simulate fetching tasks from an API
-      setTimeout(() => {
-        this.tasks = [
-          {
-            id: 1,
-            title: "Renew gym membership",
-            completed: false,
-            createdAt: new Date(),
-          },
-          {
-            id: 2,
-            title: "Create a video for YouTube",
-            completed: true,
-            createdAt: new Date(),
-          },
-          {
-            id: 3,
-            title: "Write a blog about new trends",
-            completed: false,
-            createdAt: new Date(),
-          },
-          {
-            id: 4,
-            title: "Send project file to the client",
-            completed: false,
-            createdAt: new Date(),
-          },
-          {
-            id: 5,
-            title: "Discuss new project with team",
-            completed: false,
-            createdAt: new Date(),
-          },
-        ];
-        this.loading = false;
-      }, 1000);
-    },
-    addTask(task) {
-      task.id = this.tasks.length + 1;
-      this.tasks.unshift(task);
-    },
-    toggleTask(taskId) {
-      const task = this.tasks.find((t) => t.id === taskId);
-      if (task) {
-        task.completed = !task.completed;
-      }
-    },
+    ...mapActions([
+      "fetchTasks",
+      "addTask",
+      "toggleTask",
+      "changeFilter",
+      "setFilter",
+    ]),
   },
 };
 </script>
