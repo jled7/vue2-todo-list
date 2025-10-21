@@ -30,19 +30,23 @@
       </div>
       <TodoList v-else :tasks="filteredTasks" @toggleTask="toggleTask" />
     </div>
+    <ErrorComponent />
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 import TodoList from "./components/TodoList.vue";
 import AddTaskInput from "./components/AddTaskInput.vue";
-import { mapActions, mapGetters } from "vuex";
+import ErrorComponent from "./components/ErrorComponent.vue";
 
 export default {
   name: "App",
   components: {
     TodoList,
     AddTaskInput,
+    ErrorComponent,
   },
   mounted() {
     this.fetchTasks();
