@@ -58,13 +58,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions([
-      "fetchTasks",
-      "addTask",
-      "toggleTask",
-      "changeFilter",
-      "setFilter",
-    ]),
+    ...mapActions(["fetchTasks", "addTask", "toggleTask", "setFilter"]),
   },
 };
 </script>

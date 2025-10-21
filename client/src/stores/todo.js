@@ -8,7 +8,8 @@ import {
   ADD_TASK,
   TOGGLE_TASK,
 } from "./mutation-types.js";
-import { setupEventSource } from "./eventSource.js";
+import { setupEventSource } from "../services/eventSource.js";
+import { addTask, fetchTasks, toggleTask } from "../services/api.js";
 
 Vue.use(Vuex);
 
@@ -55,7 +56,7 @@ const store = new Vuex.Store({
       state.tasks = tasks;
     },
     [ADD_TASK]: function (state, task) {
-      state.tasks.push(task);
+      state.tasks.unshift(task);
     },
     [TOGGLE_TASK]: function (state, { id, taskCompleted }) {
       const t = state.tasks.find((t) => t.id === id);
@@ -69,27 +70,15 @@ const store = new Vuex.Store({
     },
     async fetchTasks({ commit }) {
       commit(SET_LOADING, true);
-      const response = await fetch("http://localhost:3000/api/tasks");
-      const tasks = await response.json();
+      const tasks = await fetchTasks();
       commit(SET_TASKS, tasks);
       commit(SET_LOADING, false);
     },
     async addTask({ commit }, title) {
-      await fetch("http://localhost:3000/api/tasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: title.trim() }),
-      });
+      await addTask(title.trim());
     },
     async toggleTask({ commit }, id) {
-      await fetch(`http://localhost:3000/api/tasks/${id}/toggle`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      await toggleTask(id);
     },
   },
 });

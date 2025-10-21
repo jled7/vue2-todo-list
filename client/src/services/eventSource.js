@@ -1,12 +1,11 @@
-import { ADD_TASK, TOGGLE_TASK } from "./mutation-types";
+import { SERVER_URL } from "../config";
+import { ADD_TASK, TOGGLE_TASK } from "../stores/mutation-types";
 
 const TASK_CREATED_EVENT = "task.created";
 const TASK_TOGGLE_COMPLETED_EVENT = "task.toggle.completed";
 
 export function setupEventSource(store) {
-  const sseEventSource = new EventSource(
-    "http://localhost:3000/api/tasks/stream"
-  );
+  const sseEventSource = new EventSource(`${SERVER_URL}/api/tasks/stream`);
 
   sseEventSource.addEventListener(TASK_CREATED_EVENT, function (event) {
     const parsedData = JSON.parse(event.data);
