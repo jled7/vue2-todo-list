@@ -7,6 +7,7 @@ import {
   SET_TASKS,
   ADD_TASK,
   TOGGLE_TASK,
+  SET_ERROR,
 } from "./mutation-types.js";
 import { setupEventSource } from "../services/eventSource.js";
 import { addTask, fetchTasks, toggleTask } from "../services/api.js";
@@ -15,11 +16,13 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    error: "",
     tasks: [],
     loading: true,
     filter: "all",
   },
   getters: {
+    error: (state) => state.error,
     filter: (state) => state.filter,
     loading: (state) => state.loading,
     allTasks: (state) => state.tasks,
@@ -46,6 +49,9 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
+    [SET_ERROR]: function (state, error) {
+      state.error = error;
+    },
     [SET_LOADING]: function (state, isLoading) {
       state.loading = isLoading;
     },
@@ -69,16 +75,28 @@ const store = new Vuex.Store({
       commit(SET_FILTER, filter);
     },
     async fetchTasks({ commit }) {
-      commit(SET_LOADING, true);
-      const tasks = await fetchTasks();
-      commit(SET_TASKS, tasks);
-      commit(SET_LOADING, false);
+      try {
+        commit(SET_LOADING, true);
+        const tasks = await fetchTasks();
+        commit(SET_TASKS, tasks);
+        commit(SET_LOADING, false);
+      } catch (error) {
+        commit(SET_ERROR, error.message);
+      }
     },
     async addTask({ commit }, title) {
-      await addTask(title.trim());
+      try {
+        await addTask(title.trim());
+      } catch (error) {
+        commit(SET_ERROR, error.message);
+      }
     },
     async toggleTask({ commit }, id) {
-      await toggleTask(id);
+      try {
+        await toggleTask(id);
+      } catch (error) {
+        commit(SET_ERROR, error.message);
+      }
     },
   },
 });
