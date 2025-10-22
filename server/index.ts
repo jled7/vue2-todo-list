@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { APP_PORT } from "./config/index";
+import { APP_PORT } from "./config";
 
 import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository";
 import ServerSideEvents from "./infrastructure/events/serverSideEvents";

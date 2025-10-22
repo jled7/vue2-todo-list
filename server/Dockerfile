@@ -14,9 +14,12 @@ RUN pnpm install
 # Copy source code
 COPY . .
 
+# Build TypeScript
+RUN pnpm build
+
 # Expose port
 ENV HOST=0.0.0.0 PORT=3000
 EXPOSE ${PORT}
 
-ENV NODE_OPTIONS='--unhandled-rejections=warn'
-CMD ["node", "."]
+# Run the compiled JavaScript
+CMD ["node", "dist/index.js"]
