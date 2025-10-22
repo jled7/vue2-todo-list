@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
+import helmet from "helmet";
+
 import { APP_PORT } from "./config";
 
 import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository";
@@ -11,6 +14,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(morgan("combined"));
+app.use(helmet());
 
 const eventBus = new EventBusMap();
 const repository = new MongoDBTaskRepository();

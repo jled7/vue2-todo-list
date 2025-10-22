@@ -24,6 +24,7 @@ This simple To-Do App done with Vue2, Express and Mongo.
 - **Mongoose** - ODM
 - **Morgan** - Request Logging middleware
 - **Helmet** - Security middleware
+- **CORS** - CORS middleware
 
 ## Project launch (via Docker-compose)
 
