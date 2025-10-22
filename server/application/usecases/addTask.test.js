@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import addTaskUseCase from "./addTask.js";
+import TaskCreated from "../../domain/events/TaskCreated.js";
 
 describe("addTask UseCase", () => {
   it("should create and save a task", async () => {
@@ -23,7 +24,13 @@ describe("addTask UseCase", () => {
     expect(result.title).toBe("Test task");
     expect(result.completed).toBe(false);
     expect(mockRepository.save).toHaveBeenCalledWith(result);
-    expect(mockEventBus.publish).toHaveBeenCalled();
+
+    // Check that the correct event was published
+    expect(mockEventBus.publish).toHaveBeenCalledOnce();
+    const publishedEvent = mockEventBus.publish.mock.calls[0][0];
+    expect(publishedEvent).toBeInstanceOf(TaskCreated);
+    expect(publishedEvent.name).toBe(TaskCreated.name);
+    expect(publishedEvent.task).toBe(result);
   });
 
   it("should throw error for invalid title", async () => {
