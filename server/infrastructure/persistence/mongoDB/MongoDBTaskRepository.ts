@@ -1,10 +1,8 @@
 import mongoose from "mongoose";
-import Task from "../../../domain/entities/Task.js";
-import TaskRepository from "../../../domain/repositories/TaskRepository.js";
-
-import TaskModel from "./TaskModel.js";
-
-import { MONGODB_URI } from "../../../config/index.js";
+import Task from "../../../domain/entities/Task";
+import TaskRepository from "../../../domain/repositories/TaskRepository";
+import TaskModel, { ITaskDocument } from "./TaskModel";
+import { MONGODB_URI } from "../../../config/index";
 
 export class MongoDBTaskRepository extends TaskRepository {
   constructor() {
@@ -12,11 +10,11 @@ export class MongoDBTaskRepository extends TaskRepository {
     mongoose.connect(MONGODB_URI);
   }
 
-  idGenerator() {
+  idGenerator(): mongoose.Types.ObjectId {
     return new mongoose.Types.ObjectId();
   }
 
-  async save(task) {
+  async save(task: Task): Promise<void> {
     const taskData = { ...task };
 
     if (task.id) {
@@ -26,16 +24,17 @@ export class MongoDBTaskRepository extends TaskRepository {
         { upsert: true }
       );
     } else {
-      await TaskModel.insert(task);
+      await TaskModel.insertMany([task]);
     }
   }
-  async list() {
-    const tasksData = await TaskModel.find({}, null, {
+
+  async list(): Promise<Task[]> {
+    const tasksData: ITaskDocument[] = await TaskModel.find({}, null, {
       sort: { createdAt: -1 },
     });
 
     return tasksData.map(
-      (data) =>
+      (data: ITaskDocument) =>
         new Task({
           id: data._id,
           title: data.title,
@@ -44,8 +43,9 @@ export class MongoDBTaskRepository extends TaskRepository {
         })
     );
   }
-  async get(id) {
-    const data = await TaskModel.findOne({ _id: id });
+
+  async get(id: any): Promise<Task | null> {
+    const data: ITaskDocument | null = await TaskModel.findOne({ _id: id });
 
     if (!data) {
       return null;
