@@ -19,4 +19,4 @@ ENV HOST=0.0.0.0 PORT=5173
 EXPOSE ${PORT}
 
 # Start the development server
-CMD ["pnpm", "run", "dev"]
+CMD ["pnpm", "run", "dev", "--host", "0.0.0.0"]
