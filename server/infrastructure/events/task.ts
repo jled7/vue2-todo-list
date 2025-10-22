@@ -1,6 +1,6 @@
 import TaskCreated from "../../domain/events/TaskCreated";
 import TaskToggleCompleted from "../../domain/events/TaskToggleCompleted";
-import EventBus from "../../application/services/EventBus";
+import EventBus from "../../domain/events/EventBus";
 import ServerSideEvents from "./serverSideEvents";
 
 export interface ISetupTaskEventsDependencies {

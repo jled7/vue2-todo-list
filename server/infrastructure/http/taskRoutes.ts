@@ -3,7 +3,7 @@ import addTaskUseCase from "../../application/usecases/addTask";
 import listTasksUseCase from "../../application/usecases/listTasks";
 import toggleTaskCompletionUseCase from "../../application/usecases/toggleTaskCompletion";
 import TaskRepository from "../../domain/repositories/TaskRepository";
-import EventBus from "../../application/services/EventBus";
+import EventBus from "../../domain/events/EventBus";
 import setupTaskEvents from "../events/task";
 
 export interface ITaskRoutesDependencies {

@@ -2,19 +2,19 @@ import express from "express";
 import cors from "cors";
 import { APP_PORT } from "./config/index";
 
-import EventBus from "./application/services/EventBus";
 import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository";
 import ServerSideEvents from "./infrastructure/events/serverSideEvents";
 import buildTaskRoutes from "./infrastructure/http/taskRoutes";
+import EventBusMap from "./application/services/EventBusMap";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const eventBus = new EventBus();
+const eventBus = new EventBusMap();
 const repository = new MongoDBTaskRepository();
-const sse = new ServerSideEvents({ eventBus });
+const sse = new ServerSideEvents();
 
 app.use(
   "/api/tasks",

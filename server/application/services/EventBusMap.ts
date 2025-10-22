@@ -1,12 +1,8 @@
 /* For a simple product as this todo list app, no reason to use SNS or other complex event bus system */
 
-export interface IEvent {
-  name: string;
-}
+import EventBus, { EventHandler, IEvent } from "../../domain/events/EventBus";
 
-export type EventHandler<T = IEvent> = (event: T) => void;
-
-export default class EventBus {
+export default class EventBusMap implements EventBus {
   #handlers = new Map<string, EventHandler[]>();
 
   on<T extends IEvent>(eventName: string, handler: EventHandler<T>): void {

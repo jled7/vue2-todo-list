@@ -1,16 +1,9 @@
 import { Request, Response } from "express";
-import EventBus from "../../application/services/EventBus";
-
-export interface IServerSideEventsDependencies {
-  eventBus: EventBus;
-}
 
 export default class ServerSideEvents {
-  private eventBus: EventBus;
   private clients: Set<Response>;
 
-  constructor({ eventBus }: IServerSideEventsDependencies) {
-    this.eventBus = eventBus;
+  constructor() {
     this.clients = new Set();
   }
 

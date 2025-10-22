@@ -1,7 +1,7 @@
 import Task from "../../domain/entities/Task";
+import EventBus from "../../domain/events/EventBus";
 import TaskCreated from "../../domain/events/TaskCreated";
 import TaskRepository from "../../domain/repositories/TaskRepository";
-import EventBus from "../services/EventBus";
 
 export interface IAddTaskDependencies {
   repository: TaskRepository;
