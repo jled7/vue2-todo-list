@@ -1,4 +1,4 @@
-import Task from "../entities/Task.js";
+import Task from "../entities/Task";
 
 export default abstract class TaskRepository {
   abstract idGenerator(): string | number | object;

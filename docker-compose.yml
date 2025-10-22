@@ -13,6 +13,23 @@ services:
       - todo-network
     command: --logpath /dev/null
 
+  seed:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: todo-seed
+    restart: "no"
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongodb:27017/todo_list
+    depends_on:
+      - mongodb
+    volumes:
+      - ./server:/app
+    networks:
+      - todo-network
+    command: ["node", "dist/scripts/seed.js"]
+
   server:
     build:
       context: ./server
@@ -27,6 +44,7 @@ services:
       - MONGODB_URI=mongodb://mongodb:27017/todo_list
     depends_on:
       - mongodb
+      - seed
     volumes:
       - ./server:/app
     networks:
