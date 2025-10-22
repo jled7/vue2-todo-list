@@ -4,7 +4,7 @@ import TaskRepository from "../../../domain/repositories/TaskRepository";
 import TaskModel, { ITaskDocument } from "./TaskModel";
 import { MONGODB_URI } from "../../../config/index";
 
-export class MongoDBTaskRepository extends TaskRepository {
+export default class MongoDBTaskRepository extends TaskRepository {
   constructor() {
     super();
     mongoose.connect(MONGODB_URI);

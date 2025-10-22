@@ -1,5 +1,5 @@
 import Task from "domain/entities/Task";
-import { MongoDBTaskRepository } from "infrastructure/persistence/mongoDB/MongoDBTaskRepository";
+import MongoDBTaskRepository from "infrastructure/persistence/mongoDB/MongoDBTaskRepository";
 
 const mongoDBTaskRepository = new MongoDBTaskRepository();
 
