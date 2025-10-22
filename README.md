@@ -15,6 +15,7 @@ This simple To-Do App done with Vue2, Express and Mongo.
 - **Vue 2** - JavaScript framework
 - **Vuex 3.6.2** - State management library
 - **Fetch API** - HTTP client
+- **EventSource API** - EventSource client to get real-time server side events
 
 ### Backend
 
