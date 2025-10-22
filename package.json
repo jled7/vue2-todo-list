@@ -2,7 +2,6 @@
   "name": "vue2-todo-list",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "concurrently \"pnpm run dev:client\" \"pnpm run dev:server\"",
     "dev:client": "cd client && pnpm run dev",
