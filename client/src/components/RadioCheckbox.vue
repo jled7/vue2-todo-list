@@ -3,7 +3,7 @@
     <label class="container" @click.self.stop
       ><slot></slot>
       <input type="checkbox" v-bind:checked="checked" />
-      <span class="radio"></span>
+      <span class="radio" @click.self.stop></span>
     </label>
   </div>
 </template>

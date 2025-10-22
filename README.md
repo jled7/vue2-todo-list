@@ -1,6 +1,6 @@
 # vue2-todo-list
 
-This simple To-Do App done with Vue2, Express and Mongo.
+This simple To-Do App done with Vue2, Express and Mongo. Receives real time updates via Server Side Events (SSE) on task addition and completion toggle via EventSource API.
 
 ## Services
 

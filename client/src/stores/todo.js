@@ -74,7 +74,6 @@ const store = new Vuex.Store({
     },
     [TOGGLE_TASK]: function (state, { id, taskCompleted }) {
       const t = state.tasks.find((t) => t.id === id);
-      console.log(t, id, taskCompleted);
       if (t) t.completed = taskCompleted;
     },
   },
