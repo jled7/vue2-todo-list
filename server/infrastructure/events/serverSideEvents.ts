@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
+import IServerSideEvents from "../../domain/events/IServerSideEvents";
 
-export default class ServerSideEvents {
+export default class ServerSideEvents implements IServerSideEvents {
   private clients: Set<Response>;
 
   constructor() {

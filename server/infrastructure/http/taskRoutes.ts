@@ -4,13 +4,14 @@ import listTasksUseCase from "../../application/usecases/listTasks";
 import toggleTaskCompletionUseCase from "../../application/usecases/toggleTaskCompletion";
 import TaskRepository from "../../domain/repositories/TaskRepository";
 import EventBus from "../../domain/events/EventBus";
+import IServerSideEvents from "../../domain/events/IServerSideEvents";
 import ILogger from "../../domain/logging/ILogger";
 import setupTaskEvents from "../events/task";
 
 export interface ITaskRoutesDependencies {
   repository: TaskRepository;
   eventBus: EventBus;
-  sse: any; // Type this properly when we convert SSE
+  sse: IServerSideEvents;
   logger: ILogger;
 }
 
