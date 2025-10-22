@@ -1,13 +1,19 @@
-import { describe, it, expect, vi } from "vitest";
-import addTaskUseCase from "./addTask.js";
-import TaskCreated from "../../domain/events/TaskCreated.js";
+import { describe, it, expect, vi, Mock } from "vitest";
+import addTaskUseCase from "./addTask";
+import TaskCreated from "../../domain/events/TaskCreated";
+import TaskRepository from "../../domain/repositories/TaskRepository";
+import EventBus from "../../domain/events/EventBus";
 
 describe("addTask UseCase", () => {
   it("should create and save a task", async () => {
-    const mockRepository = {
+    const mockRepository: TaskRepository = {
       save: vi.fn(),
+      idGenerator: vi.fn(),
+      list: vi.fn(),
+      get: vi.fn(),
     };
-    const mockEventBus = {
+    const mockEventBus: EventBus = {
+      on: vi.fn(),
       publish: vi.fn(),
     };
     const mockIdGenerator = vi.fn(() => "test-id");
@@ -27,14 +33,19 @@ describe("addTask UseCase", () => {
 
     // Check that the correct event was published
     expect(mockEventBus.publish).toHaveBeenCalledOnce();
-    const publishedEvent = mockEventBus.publish.mock.calls[0][0];
+    const publishedEvent = (mockEventBus.publish as Mock).mock.calls[0][0];
     expect(publishedEvent).toBeInstanceOf(TaskCreated);
     expect(publishedEvent.name).toBe(TaskCreated.name);
     expect(publishedEvent.task).toBe(result);
   });
 
   it("should throw error for invalid title", async () => {
-    const mockRepository = { save: vi.fn() };
+    const mockRepository: TaskRepository = {
+      save: vi.fn(),
+      idGenerator: vi.fn(),
+      list: vi.fn(),
+      get: vi.fn(),
+    };
     const mockIdGenerator = vi.fn();
 
     const addTask = addTaskUseCase({

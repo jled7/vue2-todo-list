@@ -1,7 +1,9 @@
-import { describe, it, expect, vi } from "vitest";
-import toggleTaskCompletionUseCase from "./toggleTaskCompletion.js";
-import Task from "../../domain/entities/Task.js";
-import TaskToggleCompleted from "../../domain/events/TaskToggleCompleted.js";
+import { describe, it, expect, vi, Mock } from "vitest";
+import toggleTaskCompletionUseCase from "./toggleTaskCompletion.ts";
+import Task from "../../domain/entities/Task.ts";
+import TaskToggleCompleted from "../../domain/events/TaskToggleCompleted.ts";
+import TaskRepository from "../../domain/repositories/TaskRepository.ts";
+import EventBus from "../../domain/events/EventBus.ts";
 
 describe("toggleTaskCompletion UseCase", () => {
   it("should toggle task completion and save", async () => {
@@ -11,11 +13,14 @@ describe("toggleTaskCompletion UseCase", () => {
       completed: false,
     });
 
-    const mockRepository = {
+    const mockRepository: TaskRepository = {
       get: vi.fn().mockResolvedValue(task),
       save: vi.fn(),
+      idGenerator: vi.fn(),
+      list: vi.fn(),
     };
-    const mockEventBus = {
+    const mockEventBus: EventBus = {
+      on: vi.fn(),
       publish: vi.fn(),
     };
 
@@ -32,15 +37,18 @@ describe("toggleTaskCompletion UseCase", () => {
 
     // Check that the correct event was published
     expect(mockEventBus.publish).toHaveBeenCalledOnce();
-    const publishedEvent = mockEventBus.publish.mock.calls[0][0];
+    const publishedEvent = (mockEventBus.publish as Mock).mock.calls[0][0];
     expect(publishedEvent).toBeInstanceOf(TaskToggleCompleted);
     expect(publishedEvent.name).toBe(TaskToggleCompleted.name);
     expect(publishedEvent.task).toBe(result);
   });
 
   it("should throw error when task not found", async () => {
-    const mockRepository = {
+    const mockRepository: TaskRepository = {
       get: vi.fn().mockResolvedValue(null),
+      save: vi.fn(),
+      idGenerator: vi.fn(),
+      list: vi.fn(),
     };
 
     const toggleTaskCompletion = toggleTaskCompletionUseCase({

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import listTasksUseCase from "./listTasks.js";
+import listTasksUseCase from "./listTasks.ts";
+import TaskRepository from "../../domain/repositories/TaskRepository.ts";
 
 describe("listTasks UseCase", () => {
   it("should return tasks from repository", async () => {
@@ -7,8 +8,11 @@ describe("listTasks UseCase", () => {
       { id: "1", title: "Task 1", completed: false },
       { id: "2", title: "Task 2", completed: true },
     ];
-    const mockRepository = {
+    const mockRepository: TaskRepository = {
       list: vi.fn().mockResolvedValue(mockTasks),
+      save: vi.fn(),
+      idGenerator: vi.fn(),
+      get: vi.fn(),
     };
 
     const listTasks = listTasksUseCase({ repository: mockRepository });
@@ -20,8 +24,11 @@ describe("listTasks UseCase", () => {
   });
 
   it("should return empty array when no tasks", async () => {
-    const mockRepository = {
+    const mockRepository: TaskRepository = {
       list: vi.fn().mockResolvedValue([]),
+      save: vi.fn(),
+      idGenerator: vi.fn(),
+      get: vi.fn(),
     };
 
     const listTasks = listTasksUseCase({ repository: mockRepository });
