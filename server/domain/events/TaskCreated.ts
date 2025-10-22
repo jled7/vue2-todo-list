@@ -1,4 +1,4 @@
-import Task from '../entities/Task.js';
+import Task from "../entities/Task";
 
 const EVENT_NAME = "task.created";
 
