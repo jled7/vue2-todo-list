@@ -1,5 +1,22 @@
+export interface ITask {
+  id: any;
+  title: string;
+  completed?: boolean;
+  createdAt?: Date;
+}
+
+export interface ITaskCreate {
+  title: string;
+  idGenerator: () => any;
+}
+
 export default class Task {
-  constructor({ id, title, completed = false, createdAt = new Date() }) {
+  public readonly id: any;
+  public title: string;
+  public completed: boolean;
+  public readonly createdAt: Date;
+
+  constructor({ id, title, completed = false, createdAt = new Date() }: ITask) {
     this.validateTitle(title);
 
     this.id = id;
@@ -8,7 +25,7 @@ export default class Task {
     this.createdAt = createdAt;
   }
 
-  validateTitle(title) {
+  private validateTitle(title: string): void {
     if (!title || typeof title !== "string") {
       throw new Error("Title must be a non-empty string");
     }
@@ -22,11 +39,11 @@ export default class Task {
     }
   }
 
-  toggleCompletion() {
+  public toggleCompletion(): void {
     this.completed = !this.completed;
   }
 
-  static create({ title, idGenerator }) {
+  static create({ title, idGenerator }: ITaskCreate): Task {
     const task = new Task({
       id: idGenerator(),
       title,

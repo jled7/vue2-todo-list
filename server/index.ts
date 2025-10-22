@@ -1,12 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { APP_PORT } from "./config/index.js";
+import { APP_PORT } from "./config/index";
 
-import EventBus from "./application/services/EventBus.js";
-
-import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository.js";
-import ServerSideEvents from "./infrastructure/events/serverSideEvents.js";
-import buildTaskRoutes from "./infrastructure/http/taskRoutes.js";
+import EventBus from "./application/services/EventBus";
+import { MongoDBTaskRepository } from "./infrastructure/persistence/mongoDB/MongoDBTaskRepository";
+import ServerSideEvents from "./infrastructure/events/serverSideEvents";
+import buildTaskRoutes from "./infrastructure/http/taskRoutes";
 
 const app = express();
 
