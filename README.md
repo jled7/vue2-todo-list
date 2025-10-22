@@ -1,35 +1,34 @@
 # vue2-todo-list
 
-This template should help get you started developing with Vue 3 in Vite.
+This simple To-Do App done with Vue2, Express and Mongo.
 
-## Recommended IDE Setup
+## Services
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- **MongoDB**: Database server on port 27017
+- **Server**: Node.js/Express API on port 3000
+- **Client**: Vue.js frontend on port 5173
 
-## Customize configuration
+## Project launch (via Docker-compose)
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+This Docker Compose setup runs the complete Todo List application with three services and a seed tool for example data:
 
-## Project Setup
-
-```sh
-pnpm install
+```bash
+docker-compose up
 ```
+
+## Access
+
+- **Frontend**: http://localhost:5173
+- **API**: http://localhost:3000/api/tasks
+- **MongoDB**: localhost:27017
 
 ### Compile and Hot-Reload for Development
 
 ```sh
-pnpm dev
-```
+cd client
+pnpm install
+cd ../server
+pnpm install
 
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
+pnpm run dev
 ```
