@@ -9,7 +9,7 @@ export interface ITaskDocument extends Document {
 
 const schema = new Schema<ITaskDocument>(
   {
-    _id: { type: mongoose.Types.ObjectId, required: true },
+    _id: { type: Schema.Types.ObjectId, required: true },
     title: { type: String, required: true },
     completed: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
