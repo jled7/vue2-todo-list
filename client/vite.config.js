@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   return {
     server: {
-      allowedHosts: env.VITE_APP_URL,
+      allowedHosts: [env.VITE_APP_URL],
     },
     plugins: [
       vue2(),
