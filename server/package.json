@@ -21,13 +21,15 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "mongoose": "^8.19.2",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "winston": "^3.18.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.3",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.9.1",
+    "@types/winston": "^2.4.4",
     "nodemon": "^3.1.10",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.19.1",

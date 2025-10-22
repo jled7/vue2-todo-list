@@ -4,18 +4,21 @@ import listTasksUseCase from "../../application/usecases/listTasks";
 import toggleTaskCompletionUseCase from "../../application/usecases/toggleTaskCompletion";
 import TaskRepository from "../../domain/repositories/TaskRepository";
 import EventBus from "../../domain/events/EventBus";
+import ILogger from "../../domain/logging/ILogger";
 import setupTaskEvents from "../events/task";
 
 export interface ITaskRoutesDependencies {
   repository: TaskRepository;
   eventBus: EventBus;
   sse: any; // Type this properly when we convert SSE
+  logger: ILogger;
 }
 
 export default function buildTaskRoutes({
   repository,
   eventBus,
   sse,
+  logger,
 }: ITaskRoutesDependencies): Router {
   const router = express.Router();
 
@@ -30,7 +33,7 @@ export default function buildTaskRoutes({
     eventBus,
   });
 
-  setupTaskEvents({ eventBus, sse });
+  setupTaskEvents({ eventBus, sse, logger });
 
   router.get("/", async (req: Request, res: Response): Promise<void> => {
     const data = await listTasks();
