@@ -55,6 +55,7 @@ services:
     ports:
       - "5173:5173"
     environment:
+      - VITE_APP_URL=localhost
       - VITE_API_ENDPOINT=http://localhost:3000
     depends_on:
       - server
